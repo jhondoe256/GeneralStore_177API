@@ -1,0 +1,39 @@
+-- CREATE DATABASE GeneralStore177
+
+use GeneralStore177
+
+CREATE TABLE Customers(
+    Id int primary key identity(1,1) not null,
+    Name NVARCHAR(100) not null,
+    Email NVARCHAR(100) not null
+)
+
+INSERT INTO Customers (Name,Email) VALUES 
+ ('Bill Bur','b@gmail.com')
+,('Jackie Joyner','jJoyner@gmail.com')
+,('Rebecca Young','rYoung@gmail.com')
+
+CREATE TABLE Products (
+    Id int PRIMARY KEY not NULL IDENTITY(1,1),
+    Name NVARCHAR(100) not NULL,
+    Price MONEY,
+    QuantityInStock int CHECK ([QuantityInStock]> 0)
+)
+
+INSERT INTO Products(Name,Price,QuantityInStock) VALUES
+ ('Snickers Bar',2.99,30)
+,('Skittles',1.99,50)
+,('Ruffles Cheddar and Sour Cream',4.99,100)
+,('Sony PS 5',499.99,30)
+
+CREATE TABLE Transactions(
+    Id int PRIMARY KEY not NULL IDENTITY(1,1),
+    ProductId int FOREIGN KEY REFERENCES Products(Id),
+    CustomerId int FOREIGN KEY REFERENCES Customers(Id),
+    Quantity int CHECK ([Quantity] > 0) NOT NULL,
+    DateOfPurchase DATETIME2 NOT NULL
+)
+
+INSERT INTO Transactions (ProductId,CustomerId,Quantity,DateOfPurchase) VALUES
+ (1,1,3,'12/21/2023')
+,(1,3,2,'12/21/2023')
